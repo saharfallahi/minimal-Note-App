@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from "react";
+import { useNotes, useNotesDispatch } from "../context/NotesContext";
 
-function AddNewNote({ onAddNote,notes }) {
+function AddNewNote() {
+  const notes = useNotes();
+  const dispatch = useNotesDispatch();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const inputRef = useRef(null);  
+  const inputRef = useRef(null);
 
-  useEffect(() => {  
-    if (inputRef.current) {  
-      inputRef.current.focus();  
-    }  
-  }, [notes]);  
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [notes]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,8 +24,7 @@ function AddNewNote({ onAddNote,notes }) {
       completed: false,
       createdAt: new Date().toISOString(),
     };
-    // console.log(newNote);
-    onAddNote(newNote);
+    dispatch({ type: "addNote", payload: newNote });
     setTitle("");
     setDesc("");
   };

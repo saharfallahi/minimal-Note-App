@@ -1,6 +1,8 @@
+import { useNotes } from "../context/NotesContext";
 import NoteItem from "./NoteItem";
 
-function NoteList({ notes,onDeleteNote,onCompleteNote,sortBy }) {
+function NoteList({ sortBy }) {
+  const notes = useNotes();
 
   let sortedNotes = notes;
   if (sortBy === "earliest")
@@ -19,7 +21,10 @@ function NoteList({ notes,onDeleteNote,onCompleteNote,sortBy }) {
   return (
     <div className="note-list">
       {sortedNotes.map((note) => (
-        <NoteItem key={note.id} note={note} onDeleteNote={onDeleteNote} onCompleteNote={onCompleteNote}/>
+        <NoteItem
+          key={note.id}
+          note={note}
+        />
       ))}
     </div>
   );
